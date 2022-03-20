@@ -1,0 +1,3 @@
+H:/Home work/profession-c-plus-plus/Ceaser/cmake-build-debug/CMakeFiles/Ceaser.dir
+H:/Home work/profession-c-plus-plus/Ceaser/cmake-build-debug/CMakeFiles/edit_cache.dir
+H:/Home work/profession-c-plus-plus/Ceaser/cmake-build-debug/CMakeFiles/rebuild_cache.dir

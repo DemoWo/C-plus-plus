@@ -1,0 +1,3 @@
+H:/Home work/profession-c-plus-plus/Vectro3/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+H:/Home work/profession-c-plus-plus/Vectro3/cmake-build-debug/CMakeFiles/Vectro3.dir
+H:/Home work/profession-c-plus-plus/Vectro3/cmake-build-debug/CMakeFiles/edit_cache.dir

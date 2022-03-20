@@ -1,0 +1,3 @@
+H:/Home work/profession-c-plus-plus/Sorting/cmake-build-debug/CMakeFiles/Sorting.dir
+H:/Home work/profession-c-plus-plus/Sorting/cmake-build-debug/CMakeFiles/edit_cache.dir
+H:/Home work/profession-c-plus-plus/Sorting/cmake-build-debug/CMakeFiles/rebuild_cache.dir
