@@ -1,31 +1,27 @@
 ﻿#include <iostream>
 
 char check_won(char win, char tic[3][3]) {
-
     for (int i = 0; i < 3; ++i) {
-        for (int j = 0; j < 3; ++j) {
-            if ((tic[0][0] == 'X' && tic[0][1] == 'X' && tic[0][2] == 'X') ||
-                (tic[1][0] == 'X' && tic[1][1] == 'X' && tic[1][2] == 'X') ||
-                (tic[2][0] == 'X' && tic[2][1] == 'X' && tic[2][2] == 'X') ||
-                (tic[0][0] == 'X' && tic[1][0] == 'X' && tic[2][0] == 'X') ||
-                (tic[0][1] == 'X' && tic[1][1] == 'X' && tic[2][1] == 'X') ||
-                (tic[2][0] == 'X' && tic[2][1] == 'X' && tic[3][2] == 'X') ||
-                (tic[0][0] == 'X' && tic[1][1] == 'X' && tic[2][2] == 'X') ||
-                (tic[0][2] == 'X' && tic[1][1] == 'X' && tic[2][0] == 'X')) {
-                return win = 'X';
-            }
-            else if ((tic[0][0] == 'O' && tic[0][1] == 'O' && tic[0][2] == 'O') ||
-                (tic[1][0] == 'O' && tic[1][1] == 'O' && tic[1][2] == 'O') ||
-                (tic[2][0] == 'O' && tic[2][1] == 'O' && tic[2][2] == 'O') ||
-                (tic[0][0] == 'O' && tic[1][0] == 'O' && tic[2][0] == 'O') ||
-                (tic[0][1] == 'O' && tic[1][1] == 'O' && tic[2][1] == 'O') ||
-                (tic[2][0] == 'O' && tic[2][1] == 'O' && tic[3][2] == 'O') ||
-                (tic[0][0] == 'O' && tic[1][1] == 'O' && tic[2][2] == 'O') ||
-                (tic[0][2] == 'O' && tic[1][1] == 'O' && tic[2][0] == 'O')) {
-                return win = 'O';
-            }
+        if (tic[i][0] == tic[i][1] && tic[i][1] == tic[i][2]) {
+            return win = tic[i][0];
         }
+        else continue;
     }
+
+    for (int j = 0; j < 3; ++j) {
+        if (tic[0][j] == tic[1][j] && tic[1][j] == tic[2][j]) {
+            return win = tic[0][j];
+        }
+        else continue;
+    }
+
+    if (tic[0][0] == tic[1][1] && tic[2][2] == tic[0][0]) {
+        return win = tic[0][0];
+    }
+    else if (tic[0][2] == tic[1][1] && tic[1][1] == tic[2][0]) {
+        return win = tic[0][2];
+    }
+
     return 0;
 }
 
