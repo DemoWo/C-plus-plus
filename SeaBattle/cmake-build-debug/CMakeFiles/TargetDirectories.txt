@@ -1,0 +1,3 @@
+H:/Home work/C-plus-plus/SeaBattle/cmake-build-debug/CMakeFiles/SeaBattle.dir
+H:/Home work/C-plus-plus/SeaBattle/cmake-build-debug/CMakeFiles/edit_cache.dir
+H:/Home work/C-plus-plus/SeaBattle/cmake-build-debug/CMakeFiles/rebuild_cache.dir
