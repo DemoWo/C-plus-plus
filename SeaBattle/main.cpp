@@ -7,6 +7,7 @@ int main() {
     char playerTwo[row][colm];
     int num = 0;
     char table[row][colm];
+    std::string play;
 
     while (num != 2) {
         int litShip = 4; //маленькие корабли в одну клетку
@@ -17,23 +18,48 @@ int main() {
         if (num == 0) {
             std::cout << "The first player fills in the table: " << std::endl;
             //playerFirst[row][colm];
+          play = " Player 1 ";
         }
         if (num == 1) {
             std::cout << "The second player fills in the table: " << std::endl;
             //playerTwo[row][colm];
+          play = " Player 2 ";
         }
 
         for (int i = 0; i < row; ++i) {
             for (int j = 0; j < colm; ++j) {
-                table[i][j] = '0';
+                table[i][j] = ' ';
             }
         }
+      for(int i = 0; i < row * 3 + 2; ++i){
+      int correct = (row * 3 + 2);
+    if (i == correct / 2 )
+      std::cout << play;
+    else //if (i > correct - play.size())
+      std::cout << "=";
+    }
+      std::cout << std::endl;
+        for (int i = 0; i < row; ++i) {
+            std::cout << "-----------------------------------------" << std::endl;
+            std::cout << "|";
+            for (int j = 0; j < colm; ++j) {
+                if (num == 0) {
+                    playerFirst[i][j] = table[i][j];
+                }
+                if (num == 1) {
+                    playerTwo[i][j] = table[i][j];
+                }
+                std::cout << " " << table[i][j] << " |";
+            }
+            std::cout << std::endl;
+        }
+        std::cout << "-----------------------------------------" << std::endl;
         while (litShip != 0) {
             int x, y;
             std::cout << "Enter the location of the little ship: " << litShip << " ships left!"<< std::endl;
             std::cin >> x >> y;
 
-            if (table[x][y] == '0')
+            if (table[x][y] == ' ')
                 table[x][y] = 'L';
             else {
                 std::cout << "Error: " << std::endl;
@@ -41,24 +67,109 @@ int main() {
             }
             litShip--;
         }
+        for(int i = 0; i < row * 3 + 2; ++i){
+            int correct = (row * 3 + 2);
+            if (i == correct / 2 )
+                std::cout << play;
+            else //if (i > correct - play.size())
+                std::cout << "=";
+        }
+        std::cout << std::endl;
+        for (int i = 0; i < row; ++i) {
+            std::cout << "-----------------------------------------" << std::endl;
+            std::cout << "|";
+            for (int j = 0; j < colm; ++j) {
+                if (num == 0) {
+                    playerFirst[i][j] = table[i][j];
+                }
+                if (num == 1) {
+                    playerTwo[i][j] = table[i][j];
+                }
+                std::cout << " " << table[i][j] << " |";
+            }
+            std::cout << std::endl;
+        }
+        std::cout << "-----------------------------------------" << std::endl;
 
         while (smallShip != 0) {
-            int startX, startY ,  endX , endY;
-            std::cout << "Enter the location of the small ship: " << smallShip << " ships left!"<< std::endl;
+            int x, y, z, c;
+            std::cout << "Enter the location of the small ship: " << smallShip << " ships left!" << std::endl;
             std::cout << "Start location: " << std::endl;
-            std::cin >> startX >> startY;
+            std::cin >> x >> y;
             std::cout << "End location: " << std::endl;
-            std::cin >> endX >> endY;
-
-            if (endX - startX == 1 || endY - startY == 1) {
-                table[startX][startY] = 'S';
-                table[endX][endY] = 'S';
-                smallShip--;
+            std::cin >> z >> c;
+            if (x > z || y > c) {
+                std::cout << "Input error repeat the input: " << std::endl;
             } else {
-                std::cout << "Error: " << std::endl;
-                break;
+                //столбец
+                if (y == c) {
+                    for (int i = x; i <= z; ++i) {
+                      if (table[i][c] == ' ' ) {
+                        if (table[i][c] == 'B' || table[i][c] == 'S' || table[i][c] == 'L' || table[i][c] == 'M') {
+                          std::cout << "Input error repeat the input: " << std::endl;
+                          smallShip++;
+                          break;
+                        }
+                        if (z - x == 1){
+                          table[i][c] = 'S';
+                        } else {
+                          std::cout << "Input error repeat the input: " << std::endl;
+                          smallShip++;
+                          break;
+                        }
+                      }
+                    }
+                }
+
+                // строка
+                else if (x == z) {
+                    for (int j = y; j <= c; ++j) {
+                      if (table[z][j] == 'B' || table[z][j] == 'S' || table[z][j] == 'L' || table[z][j] == 'M'){
+                        std::cout << "Input error repeat the input: " << std::endl;
+                      smallShip++;
+                        break;
+                        }
+                        if (table[z][j] == ' ' ) {
+                          if (c - y == 1){
+                            table[z][j] = 'S';
+                          } else {
+                            std::cout << "Input error repeat the input: " << std::endl;
+                            smallShip++;
+                            break;
+                          }
+                        }
+                    }
+                } else {
+                  std::cout << "Input error repeat the input: " << std::endl;
+                  smallShip++;
+                  //break;
+                }
+              smallShip--;
             }
         }
+        for(int i = 0; i < row * 3 + 2; ++i){
+            int correct = (row * 3 + 2);
+            if (i == correct / 2 )
+                std::cout << play;
+            else //if (i > correct - play.size())
+                std::cout << "=";
+        }
+        std::cout << std::endl;
+        for (int i = 0; i < row; ++i) {
+            std::cout << "-----------------------------------------" << std::endl;
+            std::cout << "|";
+            for (int j = 0; j < colm; ++j) {
+                if (num == 0) {
+                    playerFirst[i][j] = table[i][j];
+                }
+                if (num == 1) {
+                    playerTwo[i][j] = table[i][j];
+                }
+                std::cout << " " << table[i][j] << " |";
+            }
+            std::cout << std::endl;
+        }
+        std::cout << "-----------------------------------------" << std::endl;
 
         while (middleShip != 0) {
             int x, y, z, c;
@@ -72,44 +183,81 @@ int main() {
             } else {
             //столбец
                 if (y == c) {
-                    for (int i = x; i < z; ++i) {
-                        if (table[i][c] == '0') {
-                            if (z - x == 3)
-                                table[i][c] = 'M';
-                            else {
-                                std::cout << "Input error repeat the input: " << std::endl;
-                                middleShip++;
-                                break;
-                            }
-                        } else {
-                            std::cout << "Input error repeat the input: " << std::endl;
-                            middleShip++;
-                            break;
+                    for (int i = x; i <= z; ++i) {
+                      if (table[i][c] == ' ' ) {
+                        if (table[i][c] == 'B' || table[i][c] == 'S' || table[i][c] == 'L' || table[i][c] == 'M') {
+                          std::cout << "Input error repeat the input: " << std::endl;
+                          middleShip++;
+                          break;
                         }
+                        if (z - x == 2){
+                          table[i][c] = 'M';
+                        } else {
+                          std::cout << "Input error repeat the input: " << std::endl;
+                          middleShip++;
+                          break;
+                        }
+                      }
                     }
                 }
 
                 // строка
-            else if (x == z) {
-                for (int j = y; j < c; ++j) {
-                    if (table[z][j] == '0') {
-                        if (c - y == 3)
+                else if (x == z) {
+                    for (int j = y; j <= c; ++j) {
+                      if (table[z][j] == 'B' || table[z][j] == 'S' || table[z][j] == 'L' || table[z][j] == 'M'){
+                        std::cout << "Input error repeat the input: " << std::endl;
+                        middleShip++;
+                        break;
+                        }
+                        if (table[z][j] == ' ' ) {
+                          if (c - y == 2){
                             table[z][j] = 'M';
-                        else {
+                          } else {
                             std::cout << "Input error repeat the input: " << std::endl;
                             middleShip++;
                             break;
+                          }
                         }
                     }
+                } else {
+                  std::cout << "Input error repeat the input: " << std::endl;
+                  middleShip++;
+                  //break;
                 }
-            } else {
-                std::cout << "Input error repeat the input: " << std::endl;
-                middleShip++;
-                break;
+              middleShip--;
             }
-            middleShip--;
         }
+      for(int i = 0; i < row * 3; ++i){
+      int correct = (row * 3);
+    if (i == correct / 2 )
+      std::cout << play;
+    else //if (i > correct - play.size())
+      std::cout << "=";
     }
+      std::cout << std::endl;
+        for(int i = 0; i < row * 3 + 2; ++i){
+            int correct = (row * 3 + 2);
+            if (i == correct / 2 )
+                std::cout << play;
+            else //if (i > correct - play.size())
+                std::cout << "=";
+        }
+        std::cout << std::endl;
+        for (int i = 0; i < row; ++i) {
+            std::cout << "-----------------------------------------" << std::endl;
+            std::cout << "|";
+            for (int j = 0; j < colm; ++j) {
+                if (num == 0) {
+                    playerFirst[i][j] = table[i][j];
+                }
+                if (num == 1) {
+                    playerTwo[i][j] = table[i][j];
+                }
+                std::cout << " " << table[i][j] << " |";
+            }
+            std::cout << std::endl;
+        }
+        std::cout << "-----------------------------------------" << std::endl;
 
         while (bigShip != 0) {
             int x, y, z, c;
@@ -122,47 +270,69 @@ int main() {
                 std::cout << "Input error repeat the input: " << std::endl;
             } else {
                 //столбец
-                if (y == c) {
-                    for (int i = x; i < z; ++i) {
-                        if (table[i][c] == '0') {
-                            if (z - x == 4) {
-                                table[i][c] = 'B';
-                            } else {
-                                std::cout << "Input error repeat the input: " << std::endl;
-                                bigShip++;
-                                break;
-                            }
+              if (y == c) {
+                    for (int i = x; i <= z; ++i) {
+                      if (table[i][c] == ' ' ) {
+                        if (table[i][c] == 'B' || table[i][c] == 'S' || table[i][c] == 'L' || table[i][c] == 'M') {
+                          std::cout << "Input error repeat the input: " << std::endl;
+                          bigShip++;
+                          break;
+                        }
+                        if (z - x == 3){
+                          table[i][c] = 'B';
                         } else {
+                          std::cout << "Input error repeat the input: " << std::endl;
+                          bigShip++;
+                          break;
+                        }
+                      }
+                    }
+                }
+
+                // строка
+                else if (x == z) {
+                    for (int j = y; j <= c; ++j) {
+                      if (table[z][j] == 'B' || table[z][j] == 'S' || table[z][j] == 'L' || table[z][j] == 'M'){
+                        std::cout << "Input error repeat the input: " << std::endl;
+                      bigShip++;
+                        break;
+                        }
+                        if (table[z][j] == ' ' ) {
+                          if (c - y == 3){
+                            table[z][j] = 'B';
+                          } else {
                             std::cout << "Input error repeat the input: " << std::endl;
                             bigShip++;
                             break;
-                        }
-                    }
-                }
-                    // строка
-                else if (x == z) {
-                    for (int j = y; j < c; ++j) {
-                        if (table[z][j] == '0') {
-                            if (c - y == 4) {
-                                table[z][j] = 'B';
-                            } else {
-                                std::cout << "Input error repeat the input: " << std::endl;
-                                bigShip++;
-                                break;
-                            }
+                          }
                         }
                     }
                 } else {
-                    std::cout << "Input error repeat the input: " << std::endl;
-                    bigShip++;
-                    break;
+                  std::cout << "Input error repeat the input: " << std::endl;
+                  bigShip++;
+                  //break;
                 }
-                bigShip--;
+              bigShip--;
             }
         }
-
+    for(int i = 0; i < row * 3; ++i){
+      int correct = (row * 3);
+    if (i == correct / 2 )
+      std::cout << play;
+    else std::cout << "=";
+    }
+      std::cout << std::endl;
+        for(int i = 0; i < row * 3 + 2; ++i){
+            int correct = (row * 3 + 2);
+            if (i == correct / 2 )
+                std::cout << play;
+            else //if (i > correct - play.size())
+                std::cout << "=";
+        }
+        std::cout << std::endl;
         for (int i = 0; i < row; ++i) {
-            std::cout << "---------------------------------------|" << std::endl;
+            std::cout << "-----------------------------------------" << std::endl;
+            std::cout << "|";
             for (int j = 0; j < colm; ++j) {
                 if (num == 0) {
                     playerFirst[i][j] = table[i][j];
@@ -174,7 +344,7 @@ int main() {
             }
             std::cout << std::endl;
         }
-        std::cout << "---------------------------------------|" << std::endl;
+        std::cout << "-----------------------------------------" << std::endl;
         num++;
     }
 
@@ -232,24 +402,26 @@ int main() {
 
     std::cout << "The result of hitting the ships: " << std::endl;
     for (int i = 0; i < row; ++i) {
-        std::cout << "---------------------------------------|" << std::endl;
+        std::cout << "-----------------------------------------" << std::endl;
+        std::cout << "|";
         for (int j = 0; j < colm; ++j) {
             std::cout << " " << playerFirst[i][j] << " |";
         }
         std::cout << std::endl;
     }
-    std::cout << "---------------------------------------|" << std::endl;
+    std::cout << "-----------------------------------------" << std::endl;
 
     std::cout << std::endl;
 
     for (int i = 0; i < row; ++i) {
-        std::cout << "---------------------------------------|" << std::endl;
+        std::cout << "-----------------------------------------" << std::endl;
+        std::cout << "|";
         for (int j = 0; j < colm; ++j) {
             std::cout << " " << playerTwo[i][j] << " |";
         }
         std::cout << std::endl;
     }
-    std::cout << "---------------------------------------|" << std::endl;
+    std::cout << "-----------------------------------------" << std::endl;
 
     return 0;
 }
