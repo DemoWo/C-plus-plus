@@ -1,0 +1,3 @@
+H:/Home work/C-plus-plus/SmartHome/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+H:/Home work/C-plus-plus/SmartHome/cmake-build-debug/CMakeFiles/SmartHome.dir
+H:/Home work/C-plus-plus/SmartHome/cmake-build-debug/CMakeFiles/edit_cache.dir
