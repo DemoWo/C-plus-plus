@@ -92,29 +92,23 @@ bool sectors_check (bool check, int sector)
 
 int main() {
     bool check;
-    std::vector<int> sect;
+    bool check_quest[14];
 
     std::cout << "The game begins: " << std::endl;
     int experts = 0, viewer = 0;
     print_result(experts, viewer);
     int sectors;
     while (experts != 6 && viewer != 6){
+        std::cout << "Input numbers sectors 1 - 13: " << std::endl;
         std::cin >> sectors;
-
-        for (int i = 0; i < sect.size(); i++){
-            if (sectors != sect[i]){
-                sect.push_back(sectors);
-                std::cout << sect[i];
-            } else {
-                sectors += 1;
-                sect.push_back(sectors);
-            }
-            std::cout << sect[i];
+        if ((sectors < 1 || sectors > 13) || check_quest[sectors]) {
+            std::cerr << "Error input!" << std::endl;
+        } else {
+            check_quest[sectors] = true;
+            check = sectors_check(check, sectors);
+            check ? experts++ : viewer++;
+            print_result(experts, viewer);
         }
-
-        check = sectors_check(check, sectors);
-        check ? experts++: viewer++;
-        print_result(experts, viewer);
     }
 
     std::cout << (experts == 6 ? "Experts won!" : "Viewer won!") << std::endl;
