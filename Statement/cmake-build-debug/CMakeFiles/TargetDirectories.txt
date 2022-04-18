@@ -1,0 +1,3 @@
+H:/Home work/C-plus-plus/Statement/cmake-build-debug/CMakeFiles/Statement.dir
+H:/Home work/C-plus-plus/Statement/cmake-build-debug/CMakeFiles/edit_cache.dir
+H:/Home work/C-plus-plus/Statement/cmake-build-debug/CMakeFiles/rebuild_cache.dir

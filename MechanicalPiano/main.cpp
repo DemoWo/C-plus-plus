@@ -1,99 +1,178 @@
 #include <iostream>
 #include <string>
+#include <sstream>
 
-enum note
+enum switches
 {
-    DO = 1,  //1
-    RE = 2, //2
-    MI = 4,//3
-    FA = 8,//4
-    SOL = 16,//5
-    LA = 32,//6
-    SI = 64//7
+    LIGHTS_INSIDE = 1,
+    LIGHTS_OUTSIDE = 2,
+    HEATERS = 4,
+    WATER_PIPE_HEATING = 8,
+    CONDITIONER = 16
 };
 
-int check_num (int num){
-    num = (1 << (num - 1));
-    return num;
+void print_switches (int index){
+    if (index & LIGHTS_INSIDE){
+        std::cout << "The light inside is on! 2700k" << std::endl;
+    }
+    if (index & LIGHTS_OUTSIDE){
+        std::cout << "The light outside is on!" << std::endl;
+    }
+    if (index & HEATERS){
+        std::cout << "The heaters on!" << std::endl;
+    }
+    if (index & WATER_PIPE_HEATING){
+        std::cout << "Water heating is on!" << std::endl;
+    }
+    if (index & CONDITIONER){
+        std::cout << "Air conditioning is on!" << std::endl;
+    }
 }
 
-bool check_note (std::string noteCheck, bool checkNote){
-    for (int i = 0; i < noteCheck.size(); i++) {
-        if (noteCheck[i] >= '1' && noteCheck[i] <= '7') {
-            checkNote = true;
-        } else {
-            checkNote = false;
-            break;
-        }
-    }
-    return checkNote;
+bool light_check (std::string& answer,bool light){
+    if (answer == "on" || answer == "off"){
+        light = true;
+    } else
+        light = false;
+    return light;
 }
 
-void notes_print (std::string melody[], int row){
-    std::string notion;
-    int notes;
-
-    for (int i = 0; i < row; i++) {
-        notion = melody[i];
-        bool d = true;
-        bool r = true;
-        bool m = true;
-        bool f = true;
-        bool s = true;
-        bool l = true;
-        bool si = true;
-
-        for (int j = 0; j < notion.size(); j++) {
-            int num = notion[j] - '0';
-            notes = check_num(num);
-
-            if (notes & SI && si) { //7
-                std::cout << "SI" << " ";
-                si = false;
-            } else if (notes & LA && l) { //6
-                std::cout << "LA" << " ";
-                l = false;
-            } else if (notes & SOL && s) { //5
-                std::cout << "SOL" << " ";
-                s = false;
-            } else if (notes & FA && f) { //4
-                std::cout << "FA" << " ";
-                f = false;
-            } else if (notes & MI && m) { //3
-                std::cout << "MI" << " ";
-                m = false;
-            } else if (notes & RE && r) { //2
-                std::cout << "RE" << " ";
-                r = false;
-            } else if (notes & DO && d) {  //1
-                std::cout << "DO" << " ";
-                d = false;
-            }
-        }
-        std::cout << "| ";
+bool movement_check (const std::string& answer, bool movement){
+    if (answer == "yes" || answer == "no"){
+        movement = true;
+    } else {
+        movement = false;
     }
+    return movement;
+}
+
+int countWater = 0;
+int tempOut_check (int tempOut){
+    int status = 0;
+    if (tempOut < 0 && countWater == 0){
+        status |= WATER_PIPE_HEATING;
+        print_switches(status);
+        countWater++;
+    }
+    else if (tempOut > 5 && countWater == 1){
+        status &= ~WATER_PIPE_HEATING;
+        std::cout << "Water heating is off!" << std::endl;
+        countWater--;
+    }
+    return 0;
+}
+
+int countOut = 0;
+void lightOut_check (int time, const std::string& movement){
+    int status = 0;
+    if ((time > 16 || time < 5) && movement == "yes" && countOut == 0){
+        status |= LIGHTS_OUTSIDE;
+        print_switches(status);
+        countOut++;
+    }
+    else if ((movement == "no" && (time < 16 && time > 5)) && countOut == 1){
+        status &= ~LIGHTS_OUTSIDE;
+        std::cout << "The light outside is off!" << std::endl;
+        countOut--;
+    }
+}
+
+int countHeat = 0;
+void heatingIns_ckeck(int tempIns){
+    int status = 0;
+    if (tempIns < 22 && countHeat == 0){
+        status |= HEATERS;
+        countHeat++;
+        print_switches(status);
+    }
+    else if (tempIns >= 25 && countHeat == 1){
+        status &= ~HEATERS;
+        std::cout << "The heaters off!" << std::endl;
+        countHeat--;
+    }
+}
+
+int countCond = 0;
+void conditioner_check(int tempIns){
+    int status = 0;
+
+    if (tempIns >= 30 && countCond == 0){
+        status |= CONDITIONER;
+        print_switches(status);
+        countCond++;
+    }
+    else if (tempIns <= 25 && countCond == 1){
+        status &= ~CONDITIONER;
+        std::cout << "Air conditioning is off!" << std::endl;
+        countCond--;
+    }
+}
+
+int countLight = 0;
+void tempLight_check (int time, const std::string& light){
+    int status = 0;
+    if (((time >= 0 && time < 16) || time > 20) && light == "on" && (countLight == 0 || countLight == 2)){
+        std::cout << "The light inside is on! 5000k" << std::endl;
+        countLight = 1;
+    }
+    else if ((time >= 16 && time <= 20) && light == "on" && (countLight == 0 || countLight == 1)){
+        status |= LIGHTS_INSIDE;
+        print_switches(status);
+        countLight = 2;
+    }
+    else if (light == "off" && (countLight == 2 || countLight == 1)){
+        status &= ~LIGHTS_INSIDE;
+        std::cout << "The light inside is off!" << std::endl;
+            countLight = 0;
+    }
+}
+
+void print_feature (){
+    for(int i = 0 ; i < 35; i++){
+        std::cout << "-";
+    } std::cout << std::endl;
 }
 
 int main() {
-    int row = 12;
-    std::string melody[row];
-    bool checkNot = true;
+    std::string dateIn;
+    int time;
+    int count = 0;
+    int countSec = 0;
+    bool check = true;
 
-    int count = row;
-    for (int i = 0; i < row; i++ ){
-        std::cout << "Enter " << count << " sounds of melodies: " << std::endl;
-        std::cin >> melody [i];
-        checkNot = check_note(melody[i], checkNot);
+    while (count != 48) {
 
-        if (checkNot) {
-            count --;
+        if (count >= 24) {
+            time = countSec;
+            countSec++;
+        } else
+            time = count;
+
+        std::cout << "At the moment " << time << " hours!" << std::endl;
+        std::cout << "Enter the readings of the inside temperature ,outside temperature, motion sensor (yes/no) and light (on/off)." << std::endl;
+        print_feature();
+        std::getline(std::cin,dateIn);
+
+        std::stringstream Input_Date (dateIn);
+        std::string light, movement;
+        int tempOuts, tempIns;
+        Input_Date >> tempOuts >> tempIns >> movement >> light;
+
+        bool movCheck = movement_check(movement,check);
+        bool lightCheck = light_check(light, check);
+
+        if (!movCheck || !lightCheck){
+            std::cout << "Error input!" << std::endl;
         } else {
-            std::cout << "Incorrect input!" << std::endl;
-            i--;
+            print_feature();
+            tempOut_check(tempOuts); // отопление в доме
+            lightOut_check(time, movement); // садовое освещение вечером если есть движение
+            heatingIns_ckeck(tempIns); // температура внутри
+            conditioner_check(tempIns); //кондиционер
+            tempLight_check(time, light); // изменение цветовой температуры в дом 5000K - 2700K
+            count++;
+            print_feature();
         }
     }
-
-    notes_print(melody, row);
-
     return 0;
 }
